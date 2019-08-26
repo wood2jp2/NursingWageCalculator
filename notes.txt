@@ -1,0 +1,34 @@
+Goal of this project:
+    - help nurses more accurately calculate the wages they can expect in their bi-weekly check, since unfortunately mistakes are made in the current process. 
+        + This can give the nurse a better idea if they need to reach out to get wages corrected.
+
+Technologies: 
+    1. Django
+    2. React
+    3. JSON Web Tokens (JWTs)
+
+Crafting the Django backend:
+    - Using the pipenv package, we can start up a virtual environment in the directory with 'pipenv shell'
+        + This assumes that you have pipenv installed (pipenv install)
+    - We installed multiple packages: 'pipenv install django djangorestframework djangorestframework-jwt django-cors-headers'
+    - started up wagecalculator project in the backend folder with 'django-admin startproject [project_name] [directory]'
+    - Modified the settings.py file by adding two installed apps and one value for cors middleware.
+    - Added a cors_origin_whitelist dictionary as well as a REST_FRAMEWORK one.
+    - Added an authentication route to urls.py
+    - Then we migrated with 'python manage.py migrate'
+    - Created user to test authentication: 'python manage.py createsuperuser'
+        + 'jwood' || Cobra_1992
+    - Start up server with 'python manage.py runserver'
+        + Our back end runs on Port 8000.
+        + If you go to http://localhost:8000/admin, you can now log in with those credentials.
+    - At http://localhost:8000/token-auth/, you can log in and actually view the token you get back on successful log in.
+        + We will also need to set up for users to sign up using Django's built-in User model.
+    - So remember, within each django project, it consists of multiple applications.
+        + For signing up, we need to create an application because we will need to display a sign up view.
+        + 'python manage.py startapp [name_of_app]'
+        + Then add the app to the INSTALLED_APPS list in the settings.py file.
+    - Now we need to serialize/unserialize the User class into and out of various formats (JSON)
+        + We created a serializers.py file in the application with two separate serializers.
+        + When the user signs up first time, we create the account and send back the username in the successful response. 
+            - We don't need this response when the user does not sign up for the first time, so hence two serializers.
+    - We added to the core>views.py file.
