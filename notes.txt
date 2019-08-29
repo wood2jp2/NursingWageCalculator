@@ -7,6 +7,8 @@ Technologies:
     2. React
     3. JSON Web Tokens (JWTs)
 
+https://medium.com/@dakota.lillie/django-react-jwt-authentication-5015ee00ef9a
+
 Crafting the Django backend:
     - Using the pipenv package, we can start up a virtual environment in the directory with 'pipenv shell'
         + This assumes that you have pipenv installed (pipenv install)
@@ -17,7 +19,7 @@ Crafting the Django backend:
     - Added an authentication route to urls.py
     - Then we migrated with 'python manage.py migrate'
     - Created user to test authentication: 'python manage.py createsuperuser'
-        + 'jwood' || Cobra_1992
+        + 'jwood' || 4esz$ESZ$ESZ
     - Start up server with 'python manage.py runserver'
         + Our back end runs on Port 8000.
         + If you go to http://localhost:8000/admin, you can now log in with those credentials.
@@ -31,4 +33,23 @@ Crafting the Django backend:
         + We created a serializers.py file in the application with two separate serializers.
         + When the user signs up first time, we create the account and send back the username in the successful response. 
             - We don't need this response when the user does not sign up for the first time, so hence two serializers.
+
+8/28
+    - After taking a break, I re-initialized the virtual machine and started it up by first changing to the 'backend' directory, then running 'pipenv shell' to activate the virtual environment.
+        + Lastly, run 'python manage.py runserver'
     - We added to the core>views.py file.
+        + We will have two views, one for existing users (current_user) and one for new users signing up through the form.
+    - We then add a new urls.py file to the core app.
+        + Each app has it's own urls.py file for routing configuration
+        + Import them, then add urls with views they are to deliver. It appears that class-based views need to be used with the .as_view() method.
+            > You don't need to define .as_view() since it should be coming from inheriting from APIView
+    - Following, we hook up the core/urls.py file to our project urls.py file.
+    
+    - Next, we need to allow users to get their data related to their account when they sign in.
+        + First we added a utils.py file to our project.
+        + Then we imported our UserSerializer into it, and created a custom function to return the data in a dictionary on the 'user' field.
+        + This becomes our default with a JWT_AUTH dictionary added to our settings.py file.
+
+    NOTE: In python, you basically access files with dot notation, and any variables, functions, or classes within. 
+
+    Tomorrow I will set this up with React.
