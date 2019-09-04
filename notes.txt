@@ -51,5 +51,21 @@ Crafting the Django backend:
         + This becomes our default with a JWT_AUTH dictionary added to our settings.py file.
 
     NOTE: In python, you basically access files with dot notation, and any variables, functions, or classes within. 
+    NOTE: 'pip freeze' displays the dependencies within your project.
+
+        Random reminder on functional programming in Python:
+
+        arr = [1, 2, 3, 4]
+
+        def cube_numbers(num):
+            return num**3
+
+        cube_array = list(map(cube_numbers, arr)) -OR- list(map(lambda num: num**3, arr))
 
     Tomorrow I will set this up with React.
+
+9/3/2019:
+    - used create-react-app to create our frontend portion alongside the backend folder.
+    - installed prop-types node package.
+        + It looks like this simply specifies the types of props a Component can expect to be passed into it, as well as whether it is required.
+    - The Nav component will conditionally render either a logged in version of itself, or a logged out version depending on the props it gets passed.
