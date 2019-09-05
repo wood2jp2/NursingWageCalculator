@@ -48,5 +48,5 @@ class SignupForm extends Component {
 export default SignupForm
 
 SignupForm.propTypes = {
-
+    handleSignup: PropTypes.func.isRequired
 }

@@ -69,3 +69,22 @@ Crafting the Django backend:
     - installed prop-types node package.
         + It looks like this simply specifies the types of props a Component can expect to be passed into it, as well as whether it is required.
     - The Nav component will conditionally render either a logged in version of itself, or a logged out version depending on the props it gets passed.
+
+9/5/2019: 
+    - Continuing, we leave the signup form separate in case we'd like to add to the information we collect on a user when they sign up.
+        + Django's User model supports email, first_name, last_name fields as well as username and password.
+            > We'd need to add any new fields to the serializer as well if we wanted the data back.
+    - The loginForm and SignupForm components are stateful, which allows us to track changes in their inputs through the handleChange() methods as users type/change the form.
+        + The handleSignup or handleSignin methods are passed down as props accordingly to handle submission.
+    - Working on the App.js, note:
+        + when the application component mounts, it throws a request to the Python back end, specifically the 'current_user' endpoint.
+            > This is a Get request to the current_user view, which includes in the header the web token from local storage (it grabs the token IF it is there, remember).
+            > It's passed through the UserSerializer, which returns a User model along with the username associated.
+            > It returns that to the React frontend as a response, turns it into JSON, and grabs the username from that json, setting the state to that username.
+    - In the SignupForm.js, once submitted, it takes the state (with username and password), and invokes the handleSignup() method being passed down thru props.
+        + this is then throwing a request to '/core/users/' (core application, users url endpoint) and passing to it the stringified data (username and password state object) in the body.
+            > Then, it's passed to the UserList view: When a request is routed to this view, a UserSerializerWithToken serializer object is instantiated with the data the user entered into the signup form. The serializer checks whether or not the data is valid, and if it is, it’ll save the new user and return that user’s data in the response (including the token, since we’re using this particular serializer).
+        + Back in the component, we can take the response, set the JWT in local storage, and set the signed in username to the current user.
+    
+    - I stumbled upon some conflicts during this. It seems to be that running 'npm install' creates a package.lock.json, which may conflict with something causing an error with the index.html or the favicon.ico.
+        + When I used yarn to add and start the app, we're okay.
