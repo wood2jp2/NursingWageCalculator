@@ -4,7 +4,11 @@ import PropTypes from 'prop-types'
 class SignupForm extends Component {
     state = {
         username: '',
-        password: ''
+        first_name: '',
+        last_name: '',
+        email: '',
+        password: '',
+        confirmPassword: ''
     }
 
     handleChange = ({ target }) => {
@@ -24,6 +28,27 @@ class SignupForm extends Component {
             <div>
                 <form onSubmit={ e => this.props.handleSignup(e, this.state)}>
                 <h4>Sign Up</h4>
+                <label htmlFor="first_name">First Name</label>
+                <input
+                    type="text"
+                    name="first_name"
+                    value={this.state.first_name}
+                    onChange={this.handleChange}
+                ></input>
+                <label htmlFor="last_name">Last Name</label>
+                <input
+                    type="text"
+                    name="last_name"
+                    value={this.state.last_name}
+                    onChange={this.handleChange}
+                ></input>
+                <label htmlFor="email">Email Address</label>
+                <input
+                    type="text"
+                    name="email"
+                    value={this.state.email}
+                    onChange={this.handleChange}
+                ></input>
                 <label htmlFor="username">Username</label>
                 <input
                     type="text"
@@ -36,6 +61,13 @@ class SignupForm extends Component {
                     type="text"
                     name="password"
                     value={this.state.password}
+                    onChange={this.handleChange}
+                ></input>
+                <label htmlFor="confirmPassword">Confirm Password</label>
+                <input
+                    type="password"
+                    name="confirmPassword"
+                    value={this.state.confirmPassword}
                     onChange={this.handleChange}
                 ></input>
                 <input type="submit"></input>

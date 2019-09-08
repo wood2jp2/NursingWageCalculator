@@ -88,3 +88,27 @@ Crafting the Django backend:
     
     - I stumbled upon some conflicts during this. It seems to be that running 'npm install' creates a package.lock.json, which may conflict with something causing an error with the index.html or the favicon.ico.
         + When I used yarn to add and start the app, we're okay.
+
+9/8/2019:
+    - I'm on my own now, so I have to figure out a couple problems: 
+        + How to prevent a user who is NOT logged in from accessing certain urls.
+    - To refamiliarize myself, I am going to add the capability to add first name, last name, and email address to the react form handling sign up.
+        1. Added the JSX to the form component.
+        2. I'm now trying to 'add' the first_name, last_name and email_address fields to the User model. 
+            + In the serializers.py UserSerializerWithToken, I have added these fields to the Meta subclass, but still isn't reflecting that it's even receiving the data in the create method (validated_data). validated_data is only showing the username that was submitted.
+            + I've added these fields now to the UserSerializerWithToken class as charFields.
+            + Following, I added the fields to the Meta subclass as strings.
+            + Now when I try to sign up, the bad request is coming from these three fields being required.
+            + Confirmed that all 5 fields are being passed back to the back end and the request is being routed through the create method.
+                > I can't figure out how to grab the firstName field that's on the self object.
+
+        SO HERE'S THE WAY TO ADD fields:
+        > On the UserSerializerWithToken, add the fields as variables, equal to serializers.charFields() (or whatever data type it will be).
+        > Add those fields as strings to the 'fields' variable on the Meta subclass.
+            fields = ('token', 'username', 'password', 'first_name', 'last_name', 'email')
+        > When they are passed to the back end, ensure that the JSON object contains all those fields named the same as they are in the back end from the state of the react component.
+
+    - On log in, I've changed the functionality to greet the user by their first name, rather than the username.
+        > Did this by:
+            1. Revising the UserSerializer to include the 'first_name' field.
+            2. Adding the 'first_name' field to the state of the App component, and setting it from the json we get back from the Login request and Signup request.
