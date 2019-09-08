@@ -13,7 +13,8 @@ class App extends Component {
     this.state = {
       displayedForm: '',
       loggedIn: !!localStorage.getItem('token'),
-      username: ''
+      username: '',
+      first_name: ''
     }
   }
 
@@ -25,7 +26,7 @@ class App extends Component {
         }
       })
       .then( res => res.json() )
-      .then( json => this.setState({ username: json.username }))
+      .then( json => this.setState({ username: json.username, first_name: json.first_name }))
     }
   }
 
@@ -42,17 +43,19 @@ class App extends Component {
     .then( res => res.json())
     .then( json => {
       localStorage.setItem('token', json.token)
+      console.log(json)
       this.setState({ 
         loggedIn: true,
         displayedForm: '',
-        username: json.user.username
+        username: json.user.username,
+        first_name: json.user.first_name
        })
     })
   }
 
   handleSignup = (e, data) => {
     e.preventDefault()
-
+    console.log(data)
     fetch('http://localhost:8000/core/users/', {
       method: 'POST',
       headers: {
@@ -63,10 +66,12 @@ class App extends Component {
     .then( res => res.json() )
     .then( json => {
       localStorage.setItem('token', json.token)
+
       this.setState({ 
         loggedIn: true,
         displayedForm: '',
-        username: json.username
+        username: json.username,
+        first_name: json.first_name
        })
     })
   }
@@ -75,6 +80,7 @@ class App extends Component {
     localStorage.removeItem('token')
     this.setState({
       username: '',
+      firstName: '',
       loggedIn: false
     })
   }
@@ -107,7 +113,7 @@ class App extends Component {
         <h3>
           {
             this.state.loggedIn ?
-              `Hello, ${this.state.username}`:
+              `Hello, ${this.state.first_name}`:
               'Please log in.'
           }
         </h3>
