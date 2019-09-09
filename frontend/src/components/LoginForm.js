@@ -4,7 +4,20 @@ import PropTypes from 'prop-types'
 class LoginForm extends Component {
     state = {
         username: '',
-        password: ''
+        password: '',
+        validForm: false
+    }
+
+    checkForFormValidity = () => {
+        // if the username is blank OR the password is blank
+        const checkForBlanks = !this.state.username || !this.state.password
+
+        if (checkForBlanks) {
+            this.setState({ validForm: false })
+        }
+        else {
+            this.setState({ validForm: true })
+        }
     }
 
     handleChange = ({ target }) => {
@@ -14,11 +27,15 @@ class LoginForm extends Component {
         this.setState( prevState => {
             const newState = { ...prevState }
             newState[name] = value
+
             return newState
         })
+
+        this.checkForFormValidity()
     }
 
     render() {
+        console.log('re-rendered')
         return (
             <div>
                 <form onSubmit={ e => this.props.handleLogin(e, this.state)}>
@@ -32,12 +49,12 @@ class LoginForm extends Component {
                     ></input>
                     <label htmlFor="password">Password</label>
                     <input
-                        type="text"
+                        type="password"
                         name="password"
                         value={this.state.password}
                         onChange={this.handleChange}
                     ></input>
-                    <input type="submit"></input>
+                    <input disabled={!this.state.validForm} type="submit"></input>
                 </form>
             </div>
         )

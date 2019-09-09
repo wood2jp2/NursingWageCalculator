@@ -112,3 +112,10 @@ Crafting the Django backend:
         > Did this by:
             1. Revising the UserSerializer to include the 'first_name' field.
             2. Adding the 'first_name' field to the state of the App component, and setting it from the json we get back from the Login request and Signup request.
+        
+    - Now I want to validate form data on the SignupForm component before allowing a user to sign up.
+        + I've added a validation function to each the Login and Signup form.
+            > For them both, I'm only enabling submit if there are no blank fields.
+            > For Signup, the password fields also have to match, and the email has to have a @ within.
+
+    - Next, upon login, I want to display the questionnaire.

@@ -8,7 +8,21 @@ class SignupForm extends Component {
         last_name: '',
         email: '',
         password: '',
-        confirmPassword: ''
+        confirmPassword: '',
+        validForm: false
+    }
+
+    checkForFormValidity = () => {
+        const passwordsMatch = this.state.password === this.state.confirmPassword
+        const emailIsValid = this.state.email.split('@').length === 2
+        const noBlanks = !Object.values(this.state).includes('')
+
+        if (passwordsMatch && emailIsValid && noBlanks) {
+            this.setState({ validForm: true })
+        }
+        else {
+            this.setState({ validForm: false })
+        }
     }
 
     handleChange = ({ target }) => {
@@ -17,17 +31,22 @@ class SignupForm extends Component {
 
         this.setState( prevState => {
             const newState = { ...prevState }
-            newState[name] = value
+            newState[name] = value.trim()
 
             return newState
         })
+
+        this.checkForFormValidity()
     }
 
     render() {
+        const passwordsMatchWarning = <p>Warning: the passwords you've chosen do not match!</p>
+        
+
         return (
             <div>
                 <form onSubmit={ e => this.props.handleSignup(e, this.state)}>
-                <h4>Sign Up</h4>
+                <h4>Sign Up - Please fill out all fields!</h4>
                 <label htmlFor="first_name">First Name</label>
                 <input
                     type="text"
@@ -44,7 +63,7 @@ class SignupForm extends Component {
                 ></input>
                 <label htmlFor="email">Email Address</label>
                 <input
-                    type="text"
+                    type="email"
                     name="email"
                     value={this.state.email}
                     onChange={this.handleChange}
@@ -70,8 +89,13 @@ class SignupForm extends Component {
                     value={this.state.confirmPassword}
                     onChange={this.handleChange}
                 ></input>
-                <input type="submit"></input>
+                <input type="submit" disabled={!this.state.validForm}></input>
                 </form>
+                <div className="formMessages">
+                    {
+                        (this.state.password || this.state.confirmPassword) && (this.state.confirmPassword !== this.state.password) && passwordsMatchWarning
+                    }
+                </div>
             </div>
         )
     }
