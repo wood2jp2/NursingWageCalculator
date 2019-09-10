@@ -4,6 +4,7 @@ import './App.css'
 import LoginForm from './components/LoginForm'
 import SignupForm from './components/SignupForm'
 import Nav from './components/Nav'
+import Questionnaire from './components/Questionnaire'
 
 class App extends Component {
 
@@ -114,7 +115,7 @@ class App extends Component {
           {
             this.state.loggedIn ?
               `Hello, ${this.state.first_name}`:
-              'Please log in.'
+              <Questionnaire />
           }
         </h3>
       </div>

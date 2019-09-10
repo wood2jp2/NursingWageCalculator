@@ -119,3 +119,12 @@ Crafting the Django backend:
             > For Signup, the password fields also have to match, and the email has to have a @ within.
 
     - Next, upon login, I want to display the questionnaire.
+
+9/9:
+    - Created a constants file to house all of the questions I'm going to need to have displayed to the user.
+        + With these, I'm adding a 'type' (most of them will be numbers obv), a min and max value, step increases, and the name of the field, which is the same as what it will be called within the Questionnaire component state.
+    - I created a Questionnaire component.
+        + This is looping through the questions and rendering them with their pertinent values as labels and inputs within a form.
+        + This component is keeping track of changing values in state, and is able to calculate an estimated rate with the inputs we see in the form so far.
+
+    NEXT: I want to only render the component when a user is logged in. I want a successful login to redirect them to either a home page or the questionnaire route.
